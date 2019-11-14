@@ -3,7 +3,7 @@ services:
   certificados:
     build: ./certificados/
     volumes:
-      - /mnt/volumes/certificados:/certificados
+      - certificados_data:/certificados
   registry:
     depends_on:
       - certificados
@@ -16,8 +16,8 @@ services:
       REGISTRY_HTTP_TLS_CERTIFICATE: /certificados/microservicos.crt
       REGISTRY_HTTP_TLS_KEY: /certificados/microservicos.key
     volumes:
-      - /mnt/volumes/certificados:/certificados
-      - /mnt/volumes/registry:/var/lib/registry
+      - certificados_data:/certificados
+      - registry_data:/var/lib/registry
   portainer:
     depends_on:
       - certificados
@@ -32,7 +32,11 @@ services:
       REGISTRY_HTTP_TLS_KEY: /certificados/microservicos.key
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - /mnt/volumes/portainer:/data
-      - /mnt/volumes/certificados:/certificados
+      - portainer_data:/data
+      - certificados_data:/certificados
     command: --ssl --sslcert /certificados/microservicos.crt --sslkey /certificados/microservicos.key
-      
+
+volumes:
+  certificados_data:
+  portainer_data:
+  registry_data:
