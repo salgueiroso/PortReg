@@ -1,0 +1,38 @@
+version: '3'
+services:
+  certificados:
+    build: ./certificados/
+    volumes:
+      - /mnt/volumes/certificados:/certificados
+  registry:
+    depends_on:
+      - certificados
+    restart: always
+    image: registry:2
+    ports:
+      - 5000:5000
+    environment:
+      REGISTRY_HTTP_ADDR: 0.0.0.0:5000
+      REGISTRY_HTTP_TLS_CERTIFICATE: /certificados/microservicos.crt
+      REGISTRY_HTTP_TLS_KEY: /certificados/microservicos.key
+    volumes:
+      - /mnt/volumes/certificados:/certificados
+      - /mnt/volumes/registry:/var/lib/registry
+  portainer:
+    depends_on:
+      - certificados
+    restart: always
+    image: portainer/portainer
+    ports:
+      - 8000:8000
+      - 443:9000
+    environment:
+      REGISTRY_HTTP_ADDR: 0.0.0.0:5000
+      REGISTRY_HTTP_TLS_CERTIFICATE: /certificados/microservicos.crt
+      REGISTRY_HTTP_TLS_KEY: /certificados/microservicos.key
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /mnt/volumes/portainer:/data
+      - /mnt/volumes/certificados:/certificados
+    command: --ssl --sslcert /certificados/microservicos.crt --sslkey /certificados/microservicos.key
+      
