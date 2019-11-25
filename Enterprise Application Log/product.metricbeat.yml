@@ -15,8 +15,8 @@ metricbeat.modules:
   metricsets: ["node", "queue"]
   period: 10s
   hosts: ["rabbitmq:15672"]
-  username: logUser
-  password: logPwd
+  username: serveloja
+  password: 5tgb&YGVsvlm&5t
 
 
 output.elasticsearch:
