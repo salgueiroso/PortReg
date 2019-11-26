@@ -5,6 +5,7 @@ services:
   rabbitmq:
     container_name: SVLRabbitMQ
     image: rabbitmq:3-management-alpine
+    restart: always
     volumes:
       - rappidmq:/var/lib/rabbitmq/mnesia
     ports:
@@ -21,6 +22,7 @@ services:
   elasticsearch:
     container_name: SVLElasticSearch    
     image: docker.elastic.co/elasticsearch/elasticsearch-oss:6.7.0
+    restart: always
     environment: 
       - discovery.type=single-node
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
@@ -49,6 +51,7 @@ services:
   kibana:
     container_name: SVLKibana    
     image: docker.elastic.co/kibana/kibana-oss:6.7.0
+    restart: always
     environment:
       - server.name=kibana
       - server.host="0"
@@ -71,6 +74,7 @@ services:
   logstash:
     container_name: SVLLogStash    
     image: docker.elastic.co/logstash/logstash-oss:6.7.0
+    restart: always
     volumes:
       - ./product.logstash.conf:/config/product.logstash.conf      
     links:
@@ -87,6 +91,7 @@ services:
   metricbeat:
     container_name: SVLMetricBeat
     image: docker.elastic.co/beats/metricbeat-oss:6.7.0
+    restart: always
     user: root
     volumes:
       - ./product.metricbeat.yml:/usr/share/metricbeat/metricbeat.yml
@@ -94,7 +99,6 @@ services:
     depends_on:
       - elasticsearch
       - kibana
-    restart: on-failure
     networks:
       - log
 
