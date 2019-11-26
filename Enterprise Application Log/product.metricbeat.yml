@@ -16,7 +16,7 @@ metricbeat.modules:
   period: 10s
   hosts: ["rabbitmq:15672"]
   username: serveloja
-  password: 5tgb&YGVsvlm&5t
+  password: PIpadReCeSaBLEAdVaceRPsewealUSkA
 
 
 output.elasticsearch:

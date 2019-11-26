@@ -14,7 +14,7 @@ services:
       - log
     environment:
       RABBITMQ_DEFAULT_USER: serveloja
-      RABBITMQ_DEFAULT_PASS: 5tgb&YGVsvlm&5t
+      RABBITMQ_DEFAULT_PASS: PIpadReCeSaBLEAdVaceRPsewealUSkA
       RABBITMQ_DEFAULT_VHOST: Serveloja
   ##########################################################
 
